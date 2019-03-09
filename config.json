@@ -1,0 +1,11 @@
+{
+    "repositories": [{
+        "name": "wp",
+        "type": "Wordpress",
+        "url": "https://github.com/perlatsp/wp-starter.git"
+    }, {
+        "name": "laravel",
+        "type": "Laravel",
+        "url": "https://github.com/perlatsp/laravel"
+    }]
+}

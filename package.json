@@ -1,0 +1,37 @@
+{
+  "name": "@perlatsp/devild",
+  "version": "0.1.2",
+  "description": "Initially created for exporting and replacing URL in a WP database.",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo no test"
+  },
+  "bin": {
+    "devild": "./cli.js"
+  },
+  "keywords": [
+    "PK"
+  ],
+  "author": {
+		"name": "Perlat Kociaj",
+		"email": "perlat@kociaj.com",
+		"url": "https://kociaj.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/perlatsp/devild.git"
+  },
+  "bugs": {
+    "url": "https://github.com/perlatsp/devild/issues"
+  },
+  "license": "DBAD",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "edit-json-file": "^1.2.1",
+    "figlet": "^1.2.1",
+    "fs": "latest",
+    "inquirer": "^6.2.2",
+    "path": "^0.12.7",
+    "shelljs": "^0.8.3"
+  }
+}
