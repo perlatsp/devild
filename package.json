@@ -1,6 +1,6 @@
 {
   "name": "@perlatsp/devild",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Initially created for exporting and replacing URL in a WP database.",
   "main": "cli.js",
   "scripts": {
@@ -13,9 +13,9 @@
     "PK"
   ],
   "author": {
-		"name": "Perlat Kociaj",
-		"email": "perlat@kociaj.com",
-		"url": "https://kociaj.com"
+    "name": "Perlat Kociaj",
+    "email": "perlat@kociaj.com",
+    "url": "https://kociaj.com"
   },
   "repository": {
     "type": "git",
