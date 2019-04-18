@@ -2,19 +2,19 @@
 
 // cli args
 const [, , ...args] = process.argv
-      inquirer      = require('inquirer'),
-      fs            = require('fs'),
-      path          = require('path'),
-      chalk         = require("chalk"),
-      figlet        = require("figlet"),
-      shell         = require("shelljs"),
-      replace       = require('./replace'),
-      editJsonFile  = require("edit-json-file");
+inquirer = require('inquirer'),
+  fs = require('fs'),
+  path = require('path'),
+  chalk = require("chalk"),
+  figlet = require("figlet"),
+  shell = require("shelljs"),
+  replace = require('./replace'),
+  editJsonFile = require("edit-json-file");
 
 
-var configFile      = editJsonFile(`${__dirname}/config.json`);
+var configFile = editJsonFile(`${__dirname}/config.json`);
 
-const commands      = [
+const commands = [
   'project:start',
   'project:add',
   'db:export',
@@ -36,8 +36,8 @@ const run = async () => {
       startProject();
       break;
     case 'project:add':
-    addProjectRepository();
-    break;
+      addProjectRepository();
+      break;
     case 'db:export':
       exportDB();
       break;
@@ -144,7 +144,7 @@ async function exportDB(dir = '.') {
     {
       type: 'password',
       name: 'db_pass',
-      default: 'root',
+      default: '',
       message: 'Database User Password?'
     },
     {
@@ -213,13 +213,13 @@ async function replaceDB() {
     .then(answers => {
       let content = fs.readFileSync(answers.file_from, 'utf-8')
       console.log(chalk.yellow(`Replacing ${answers.URL_from} with ${answers.URL_to}`))
-      let newContent = replace( content, answers.URL_from, answers.URL_to, );
-      if (newContent !== ''){
+      let newContent = replace(content, answers.URL_from, answers.URL_to, );
+      if (newContent !== '') {
         newContent = `-- Exported on ${new Date()} \n ${newContent}`;
         fs.writeFileSync(`${answers.file_to}.sql`, `${newContent}`);
         console.log(chalk.green('Complete!'))
       }
-        
+
     });
 };
 
