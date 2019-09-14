@@ -13,10 +13,19 @@ inquirer = require('inquirer'),
 
 
 var configFile = editJsonFile(`${__dirname}/config.json`);
+let repos = configFile.get().repositories
 
+if(typeof repos === 'undefined'){
+  configFile.set('repositories',[]);
+  configFile.save();
+  startProject();
+  return;
+}
 const commands = [
   'project:start',
   'project:add',
+  'project:list',
+  'project:remove',
   'db:export',
   'db:replace',
   'help',
@@ -37,6 +46,13 @@ const run = async () => {
       break;
     case 'project:add':
       addProjectRepository();
+      break;
+
+    case 'project:list':
+      listProjects();
+      break;
+    case 'project:remove':
+      removeProject();
       break;
     case 'db:export':
       exportDB();
@@ -89,12 +105,10 @@ function logerror(err) {
 async function startProject() {
   console.clear();
   projects = configFile.get().repositories;
-  if (!projects.lenghth > 1) {
+  if (!projects.length) {
     addProjectRepository();
   }
   projectsTypes = projects.map(val => val.type);
-  projectsNames = projects.map(val => val.name);
-
   let questions = [{
     type: 'input',
     name: 'project_name',
@@ -106,7 +120,7 @@ async function startProject() {
     choices: [...projectsTypes]
   }];
   return inquirer.prompt(questions).then(res => {
-    [selected] = projects.filter(element => {
+    let selected = projects.find(element => {
       return element.type === res.project;
     });
     if (selected)
@@ -282,6 +296,47 @@ async function addProjectRepository() {
   })
 }
 
+
+async function listProjects(){
+  console.clear();
+  projects = configFile.get().repositories;
+  if(typeof projects!==undefined && projects.length){
+    console.table(projects);
+  }
+  else 
+  console.log('No Projects saved!');
+  
+  console.log(chalk.yellow(`Create new project by running ${chalk.red('devild project:start {name}')}`))
+}
+
+
+async function removeProject(){
+  projects = configFile.get().repositories;
+
+  projectsTypes = projects.map(val => val.type);
+  projectsNames = projects.map(val => val.name);
+
+  let questions = [{
+    type: 'list',
+    name: 'project',
+    message: 'Select Project To Remove',
+    choices: [...projectsNames]
+  }];
+  return inquirer.prompt(questions).then(res => {
+    let selected = projects.find((element,index,ar) => {
+      return element.name === res.project
+    });
+    let selectedIndex = projects.indexOf(selected);
+    if (selectedIndex !== -1 ){
+      shell.echo(`Deleting ${selectedIndex} ${selected.name} (${selected.type})`);
+      let xi = projects.splice(selectedIndex,1);
+      configFile.set('repositories',projects);
+      configFile.save();
+    }
+  })
+
+
+}
 
 /**
  * Will create if doesnot exist an example configuration file
